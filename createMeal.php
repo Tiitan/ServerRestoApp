@@ -1,24 +1,43 @@
 <?php
-session_start();
 
-if (isset($_SESSION['idRestaurant']))
+include ('includes/sqlConnection.php');
+include ('includes/utils.php');
+
+$params = GetParameters('name', 'type', 'tokken');
+if ($params != null && checkParameters($params))
 {
-	if (isset($_GET['name']) && isset($_GET['type']))
-	{
-		include ('sqlConnection.php');
-		
-		$name = htmlspecialchars($_GET['name']);
-		$type = htmlspecialchars($_GET['type']);
-		$idRestaurant = $_SESSION['idRestaurant'];
-		
-		$request = $dbc->prepare("INSERT INTO MEAL(name, type, idRestaurant) VALUES (:name, :type, :idRestaurant)");
-		$request->execute(array('name' => $name, 'type' => $type, 'idRestaurant' => $idRestaurant));
-		
-		echo '{"islog":"true", "text":""}';
-	}
-	else
-		echo '{"islog":"false", "text":"Invalid parameters."}';
+	$dbc = ConnectToDataBase();
+	$session = GetSession(params[tokken], $dbc);
+	if ($session != null && checkSession($session))
+		process($params, $session);
 }
-else
-	echo '{"islog":"false", "text":"Not logged as restaurant."}';
+
+/*
+**	Functions
+*/
+	
+function process($params, $session)
+{
+	$request = $dbc->prepare("INSERT INTO MEAL(name, type, idRestaurant) VALUES (:name, :type, :idRestaurant)");
+	$request->execute(array('name' => params['name'], 'type' => params['type'], 'idRestaurant' => session['idUser']));
+	echo '{"islog":"true", "text":""}';
+}
+
+function checkParameters($params)
+{
+	//TODO: check parameters
+	return true;
+}
+
+function checkSession($session)
+{
+	if ($session['type'] == 'restaurant')
+		return true;
+	else
+	{
+		PrintError('Logged as user.');
+		return false;
+	}
+}
+
 ?>

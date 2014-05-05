@@ -1,6 +1,4 @@
 <?php
-	session_start();
-
 	include ('sqlConnection.php');
 
 	$request = $dbc->prepare("SELECT * FROM Restaurant");

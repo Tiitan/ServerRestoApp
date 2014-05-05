@@ -1,6 +1,4 @@
 <?php
-	session_start();
-
 	if (isset($_GET['idRestaurant']))
 	{
 		include ('sqlConnection.php');

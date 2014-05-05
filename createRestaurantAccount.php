@@ -1,17 +1,32 @@
 <?php
-if (isset($_GET['name']) && isset($_GET['pass']) && isset($_GET['address']))
+
+include ('includes/sqlConnection.php');
+include ('includes/utils.php');
+
+$params = GetParameters('name', 'pass', 'address');
+if ($params != null && checkParameters($params))
+	process($params);
+
+/*
+**	Functions
+*/
+
+function process($params)
 {
-	include ('sqlConnection.php');
+	$dbc = ConnectToDataBase();
 	
-	$name = htmlspecialchars($_GET['name']);
-	$pass = md5($_GET['pass']);
-	$address = htmlspecialchars($_GET['address']);
+	$pass = md5($params['pass']);
 	
 	$request = $dbc->prepare("INSERT INTO Restaurant(name, pass, address) VALUES (:name, :pass, :address)");
 	$request->execute(array('name' => $name, 'pass' => $pass, 'address' => $address));
 	
 	echo '{"islog":"true", "text":""}';
 }
-else
-	echo '{"islog":"false", "text":"Invalid parameters."}';
+
+function checkParameters($params)
+{
+	//TODO: check parameters
+	return true;
+}
+
 ?>

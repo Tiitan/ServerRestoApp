@@ -81,7 +81,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `restoAppDB`.`mealReservation`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `restoAppDB`.`mealReservation` (
+CREATE TABLE IF NOT EXISTS `restoAppDB`.`MealReservation` (
   `idmealReservation` INT NOT NULL AUTO_INCREMENT,
   `idReservation` INT NOT NULL,
   `idMeal` INT NOT NULL,
@@ -101,6 +101,17 @@ CREATE TABLE IF NOT EXISTS `restoAppDB`.`mealReservation` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `restoAppDB`.`Session`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `restoAppDB`.`Session` (
+  `idSession` INT NOT NULL,
+  `tokken` VARCHAR(45) NULL,
+  `timeout` DATETIME NULL,
+  `idUser` INT NULL,
+  `typeUser` VARCHAR(45) NULL,
+  PRIMARY KEY (`idSession`))
+ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

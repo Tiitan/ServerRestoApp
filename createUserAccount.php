@@ -1,18 +1,32 @@
 <?php
-if (isset($_GET['name']) && isset($_GET['pass']) && isset($_GET['phone']) && isset($_GET['email']))
+
+include ('includes/sqlConnection.php');
+include ('includes/utils.php');
+
+$params = GetParameters('name', 'pass', 'phone', 'email');
+if ($params != null && checkParameters($params))
+	process($params);
+
+/*
+**	Functions
+*/
+
+function process($params)
 {
-	include ('sqlConnection.php');
+	$dbc = ConnectToDataBase();
 	
-	$name = htmlspecialchars($_GET['name']);
-	$pass = md5($_GET['pass']);
-	$phone = htmlspecialchars($_GET['phone']);
-	$email = htmlspecialchars($_GET['email']);
+	$pass = md5($params['pass']);
 	
 	$request = $dbc->prepare("INSERT INTO user(name, pass, phone, email) VALUES (:name, :pass, :phone, :email)");
-	$request->execute(array('name' => $name, 'pass' => $pass, 'phone' => $phone, 'email' => $email));
+	$request->execute(array('name' => $params[name], 'pass' => $params[pass], 'phone' => $params[phone], 'email' => $params[email]));
 	
 	echo '{"islog":"true", "text":""}';
 }
-else
-	echo '{"islog":"false", "text":"Invalid parameters."}';
+
+function checkParameters($params)
+{
+	//TODO: check parameters
+	return true;
+}
+
 ?>
