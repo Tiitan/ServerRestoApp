@@ -59,6 +59,28 @@ if (!defined('UTILS_PHP'))
 		
 		return $session;
 	}
+	
+	function isLoggedAsRestaurant($session)
+	{
+		if ($session['type'] == 'restaurant')
+			return true;
+		else
+		{
+			PrintError('Logged as user.');
+			return false;
+		}
+	}
+	
+	function isLoggedAsUser($session)
+	{
+		if ($session['type'] == 'user')
+			return true;
+		else
+		{
+			PrintError('Logged as restaurant.');
+			return false;
+		}
+	}
 }
 
 ?>
