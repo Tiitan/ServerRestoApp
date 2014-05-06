@@ -1,6 +1,18 @@
 <?php
-	include ('sqlConnection.php');
 
+include ('includes/sqlConnection.php');
+include ('includes/utils.php');
+
+process();
+
+/*
+**	Functions
+*/
+	
+function process()
+{
+	$dbc = ConnectToDataBase();
+	
 	$request = $dbc->prepare("SELECT * FROM Restaurant");
 	$request->execute();
 	
@@ -18,4 +30,12 @@
 	echo json_encode($json);
 		
 	$request->closeCursor();
+}
+	
+function checkParameters($params)
+{
+	//TODO: check parameters
+	return true;
+}
+
 ?>

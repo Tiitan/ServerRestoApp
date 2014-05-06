@@ -105,8 +105,8 @@ ENGINE = InnoDB;
 -- Table `restoAppDB`.`Session`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restoAppDB`.`Session` (
-  `idSession` INT NOT NULL,
-  `tokken` VARCHAR(45) NULL,
+  `idSession` INT NOT NULL AUTO_INCREMENT,
+  `token` VARCHAR(45) NULL,
   `timeout` DATETIME NULL,
   `idUser` INT NULL,
   `typeUser` VARCHAR(45) NULL,

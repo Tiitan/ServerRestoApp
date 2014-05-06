@@ -33,13 +33,30 @@ if (!defined('UTILS_PHP'))
 		return $output;
 	}
 
-	Function GetSession($tokken, $dbc)
+	Function GetSession($token, $dbc)
 	{
-		//TODO: SQL request
-		//TODO: handle time out
 		$session = array();
-		$session['id'] = 0;
-		$session['type'] = 'user';
+		
+		$request = $dbc->prepare('SELECT * FROM Session WHERE token = :token');
+		$request->execute(array('token' => $params['token']));
+		
+		$result = $request->fetch();
+		if($result) 
+		{
+			$session['idUser'] = $result['idUser'];
+			$session['typeUser'] = $result['typeUser'];
+			$session['timeout'] = $result['timeout'];
+		}
+		else
+		{
+			$session = null;
+			PrintError('Invalid token.');
+		}
+		
+		$request->closeCursor();
+		
+		//TODO: handle time out
+		
 		return $session;
 	}
 }

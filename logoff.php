@@ -10,8 +10,9 @@ if ($params != null)
 	
 	$request = $dbc->prepare('REMOVE FROM SESSION WHERE tokken = :tokken');
 	$request->execute(array('tokken' => $params['tokken']));
-	
 	//TODO: Error if 0 row deleted
+	$request->closeCursor();
+	
 	echo '{"islog":"true", "text":""}';
 }
 	

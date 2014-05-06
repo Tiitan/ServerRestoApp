@@ -19,6 +19,7 @@ function process($params)
 	
 	$request = $dbc->prepare("INSERT INTO Restaurant(name, pass, address) VALUES (:name, :pass, :address)");
 	$request->execute(array('name' => $name, 'pass' => $pass, 'address' => $address));
+	$request->closeCursor();
 	
 	echo '{"islog":"true", "text":""}';
 }

@@ -24,10 +24,10 @@ function process($params)
 	{
 		$token = md5(uniqid(mt_rand(), true));
 		
-		$request = $dbc->prepare('INSERT INTO Session(idUser, tokken, typeUser) VALUES (:idUser, :tokken, :typeUser)');
-		$request->execute(array('idUser' => $dbc->lastInsertId, 'tokken' => $tokken, 'typeUser' => $params['type']));
+		$request = $dbc->prepare('INSERT INTO Session(idUser, token, typeUser) VALUES (:idUser, :token, :typeUser)');
+		$request->execute(array('idUser' => $dbc->lastInsertId(), 'token' => $token, 'typeUser' => $params['type']));
 
-		echo '{"islog":"true", "tokken":"' . $token . '"}';
+		echo '{"islog":"true", "token":"' . $token . '"}';
 	}
 	else
 		echo '{"islog":"false", "text":""}';
