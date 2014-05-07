@@ -13,9 +13,12 @@ USE `restoAppDB` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restoAppDB`.`Restaurant` (
   `idRestaurant` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NULL,
+  `loginName` VARCHAR(45) NULL,
   `pass` VARCHAR(45) NULL,
+  `name` VARCHAR(45) NULL,
   `address` VARCHAR(45) NULL,
+  `description` VARCHAR(45) NULL,
+  `tel` VARCHAR(45) NULL,
   PRIMARY KEY (`idRestaurant`))
 ENGINE = InnoDB;
 
@@ -60,8 +63,9 @@ CREATE TABLE IF NOT EXISTS `restoAppDB`.`Reservation` (
   `idRestaurant` INT NOT NULL,
   `personNumber` INT NULL,
   `date` DATETIME NULL,
-  `state` ENUM('inv','val','conf','rej') NULL,
+  `state` ENUM('inv','val','conf','rej','sit') NULL,
   `emails` VARCHAR(45) NULL,
+  `sitNumber` INT NULL,
   PRIMARY KEY (`idReservation`),
   INDEX `idUser_idx` (`idUser` ASC),
   INDEX `idRestaurant_idx` (`idRestaurant` ASC),
@@ -79,7 +83,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `restoAppDB`.`mealReservation`
+-- Table `restoAppDB`.`MealReservation`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restoAppDB`.`MealReservation` (
   `idmealReservation` INT NOT NULL AUTO_INCREMENT,
@@ -101,17 +105,19 @@ CREATE TABLE IF NOT EXISTS `restoAppDB`.`MealReservation` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
 -- -----------------------------------------------------
 -- Table `restoAppDB`.`Session`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `restoAppDB`.`Session` (
-  `idSession` INT NOT NULL AUTO_INCREMENT,
-  `token` VARCHAR(45) NULL,
+  `idSession` INT NOT NULL,
+  `tokken` VARCHAR(45) NULL,
   `timeout` DATETIME NULL,
   `idUser` INT NULL,
   `typeUser` VARCHAR(45) NULL,
   PRIMARY KEY (`idSession`))
 ENGINE = InnoDB;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
