@@ -3,7 +3,7 @@
 include ('includes/sqlConnection.php');
 include ('includes/utils.php');
 
-$params = GetParameters('dateFrom', 'dateTo', 'token');
+$params = GetParameters('idReservation', 'token');
 if ($params != null && checkParameters($params))
 {
 	$dbc = ConnectToDataBase();
@@ -20,21 +20,17 @@ function process($params, $session)
 {
 	$dbc = ConnectToDataBase();
 	
-	$request = $dbc->prepare("SELECT * FROM Reservation WHERE idRestaurant = :idRestaurant AND date > CAST(:dateFrom AS time) AND date < CAST(:dateTo AS time)");
-	$request->execute(array('idRestaurant' => $session['idUser'], 'dateFrom' => $params['dateFrom'], 'dateTo' => $session['dateTo']));
+	$request = $dbc->prepare("SELECT MealReservation.idMealReservation, MealReservation.number, Meal.name, Meal.type FROM Meal INNER JOIN MealReservation ON Meal.idMeal = MealReservation.idMeal INNER JOIN Reservation ON MealReservation.idReservation = Reservation.idReservation WHERE Reservation.idReservation = :idReservation");
+	$request->execute(array('idReservation' => $session['idReservation']));
 	
 	$reservationList = array();
 	while($result = $request->fetch()) 
 	{
 		$element = array(
-			'idReservation' => $result['idReservation'],
-			'idRestaurant' => $result['idRestaurant'],
-			'idUser' => $result['idUser']),
-			'idRestaurant' => $result['idRestaurant'],
-			'personNumber' => $result['personNumber'],
-			'date' => $result['date'],
-			'state' => $result['state'],
-			'email' => $result['email']);
+			'idMealReservation' => $result['MealReservation.idMealReservation'],
+			'name' => $result['Meal.name'],
+			'type' => $result['Meal.type'],
+			'number' => $result['MealReservation.number']);
 			
 		array_push($reservationList, $element);
 	}
