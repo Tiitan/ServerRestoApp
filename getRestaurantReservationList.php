@@ -34,7 +34,8 @@ function process($params, $session)
 			'personNumber' => $result['personNumber'],
 			'date' => $result['date'],
 			'state' => $result['state'],
-			'email' => $result['email']);
+			'email' => $result['email'],
+			'orderedMealList' => array());	//TODO: fetch meal list
 			
 		array_push($reservationList, $element);
 	}

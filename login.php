@@ -13,20 +13,11 @@ if ($params != null && checkParameters($params))
 function process($params)
 {
 	$dbc = ConnectToDataBase();
-	$request = null;
 	
 	$params['pass'] = md5($params['pass']);
-	
-	if ($params['type'] == 'user')
-	{
-		$request = $dbc->prepare('SELECT * FROM user WHERE name = :name AND pass = :pass');
-		$request->execute(array('name' => $params['name'], 'pass' => $params['pass']));
-	}
-	else
-	{
-		$request = $dbc->prepare('SELECT * FROM restaurant WHERE loginName = :loginName AND pass = :pass');
-		$request->execute(array('loginName' => $params['name'], 'pass' => $params['pass']));
-	}
+		
+	$request = $dbc->prepare('SELECT * FROM ' . $params['type'] . ' WHERE name = :name AND pass = :pass');
+	$request->execute(array('name' => $params['name'], 'pass' => $params['pass']));
 	
 	$result = $request->fetch();
 	if($result) 

@@ -32,24 +32,6 @@ if (!defined('UTILS_PHP'))
 		
 		return $output;
 	}
-	
-	Function GetOptionnalParameters()
-	{
-		$numargs = func_num_args();
-		$args = func_get_args();
-		$headerInfo = apache_request_headers();
-		$output = array();
-		
-		for ($i = 0; $i < $numargs; $i++) 
-		{
-			if (isset($_GET[$args[$i]]))
-				$output[$args[$i]] = htmlspecialchars($_GET[$args[$i]]);
-			else if (isset($headerInfo[$args[$i]]))
-				$output[$args[$i]] = htmlspecialchars($headerInfo[$args[$i]]);	
-		}
-		
-		return $output;
-	}
 
 	Function GetSession($token, $dbc)
 	{
