@@ -15,7 +15,7 @@ function process($params)
 {
 	$dbc = ConnectToDataBase();
 	
-	$pass = md5($params['pass']);
+	$params['pass'] = md5($params['pass']);
 	
 	$request = $dbc->prepare("INSERT INTO Restaurant(name, pass, address) VALUES (:name, :pass, :address)");
 	$request->execute(array('name' => $params['name'], 'pass' => $params['pass'], 'address' => $params['address']));

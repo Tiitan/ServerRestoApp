@@ -15,7 +15,7 @@ function process($params)
 {
 	$dbc = ConnectToDataBase();
 	
-	$pass = md5($params['pass']);
+	$params['pass'] = md5($params['pass']);
 	
 	$request = $dbc->prepare("INSERT INTO user(name, pass, phone, email) VALUES (:name, :pass, :phone, :email)");
 	$request->execute(array('name' => $params[name], 'pass' => $params[pass], 'phone' => $params[phone], 'email' => $params[email]));
