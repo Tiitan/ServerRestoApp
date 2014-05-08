@@ -25,7 +25,7 @@ function process($params)
 							// TODO parameters left
 	$request->closeCursor();
 	
-	echo '{"islog":"true", "text":""}';
+	echo '{"islog":true, "text":""}';
 }
 
 function checkParameters($params)
