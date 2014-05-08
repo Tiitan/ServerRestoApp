@@ -9,14 +9,14 @@ if ($params != null && checkParameters($params))
 	$dbc = ConnectToDataBase();
 	$session = GetSession(params[token], $dbc);
 	if ($session != null && isLoggedAsRestaurant($session))
-		process($params, $session);
+		process($params, $session, $dbc);
 }
 
 /*
 **	Functions
 */
 	
-function process($params, $session)
+function process($params, $session, $dbc)
 {
 	$request = $dbc->prepare("INSERT INTO MEAL(name, type, idRestaurant) VALUES (:name, :type, :idRestaurant)");
 	$request->execute(array('name' => $params['name'], 'type' => $params['type'], 'idRestaurant' => $session['idUser']));

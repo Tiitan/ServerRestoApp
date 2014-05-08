@@ -9,17 +9,15 @@ if ($params != null && checkParameters($params))
 	$dbc = ConnectToDataBase();
 	$session = GetSession(params[token], $dbc);
 	if ($session != null && isLoggedAsRestaurant($session))
-		process($params, $session);
+		process($params, $session, $dbc);
 }
 
 /*
 **	Functions
 */
 	
-function process($params, $session)
+function process($params, $session, $dbc)
 {
-	$dbc = ConnectToDataBase();
-	
 	$request = $dbc->prepare("SELECT MealReservation.idMealReservation, MealReservation.number, Meal.name, Meal.type FROM Meal INNER JOIN MealReservation ON Meal.idMeal = MealReservation.idMeal INNER JOIN Reservation ON MealReservation.idReservation = Reservation.idReservation WHERE Reservation.idReservation = :idReservation");
 	$request->execute(array('idReservation' => $session['idReservation']));
 	

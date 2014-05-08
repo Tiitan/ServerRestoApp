@@ -9,10 +9,10 @@ if ($params != null && checkParameters($params))
 	$dbc = ConnectToDataBase();
 	$session = GetSession(params[token], $dbc);
 	if ($session != null && checkSession($session))
-		process($params, $session);
+		process($params, $session, $dbc);
 }
 
-function process($params, $session)
+function process($params, $session, $dbc)
 {
 	$request = $dbc->prepare("INSERT INTO RESERVATION(idUser, idRestaurant, personNumber, date, emails) VALUES (:idUser, :idRestaurant, :personNumber, :date, :emails)");
 	$request->execute(array('idUser') => params['idUser'], array('idRestaurant') => params['idRestaurant'], array('personNumber') => params['personNumber'], array('date') => params['date'], array('emails') => params['emails']);
