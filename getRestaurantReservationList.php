@@ -21,7 +21,7 @@ function process($params, $session)
 	$dbc = ConnectToDataBase();
 	// $a = array('idRestaurant' => $session['idUser'], 'dateFrom' => $params['dateFrom'], 'dateTo' => $params['dateTo']);
 	// echo '<pre>'; print_r($a); echo '</pre>';
-	$request = $dbc->prepare("SELECT Reservation.idReservation， Reservation.idRestaurant, Reservation.idUser, Reservation.personNumber, Reservation.date, Reservation.state, Reservation.email,  User.name FROM Reservation INNER JOIN User ON User.idUser = Reservation.idUser WHERE Reservation.idRestaurant = :idRestaurant AND Reservation.state = :state AND Reservation.date > CAST(:dateFrom AS time) AND Reservation.date < CAST(:dateTo AS time)");
+	$request = $dbc->prepare("SELECT Reservation.idReservation, Reservation.idRestaurant, Reservation.idUser, Reservation.personNumber, Reservation.date, Reservation.state, Reservation.email,  User.name FROM Reservation INNER JOIN User ON User.idUser = Reservation.idUser WHERE Reservation.idRestaurant = :idRestaurant AND Reservation.state = :state AND Reservation.date > CAST(:dateFrom AS time) AND Reservation.date < CAST(:dateTo AS time)");
 	$request->execute(array('idRestaurant' => $session['idUser'], 'dateFrom' => $params['dateFrom'], 'dateTo' => $params['dateTo'], 'state' => $params['state']));
 	
 	$reservationList = array();
