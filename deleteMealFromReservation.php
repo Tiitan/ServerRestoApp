@@ -18,7 +18,7 @@ function process($params, $session)
 	$request->execute(array('idMealReservation') => params['idMealReservation']);
 	$request->closeCursor();
 
-	echo '{"islog":"true", "text":""}';
+	echo '{"islog":true, "text":""}';
 }
 
 

@@ -13,7 +13,7 @@ if ($params != null)
 	//TODO: Error if 0 row deleted
 	$request->closeCursor();
 	
-	echo '{"islog":"true", "text":""}';
+	echo '{"islog":true, "text":""}';
 }
 	
 ?>

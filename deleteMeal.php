@@ -22,7 +22,7 @@ function process($params, $session)
 	$request->execute(array('idMeal' => $params['idMeal'], 'idRestaurant' => $session['idUser']));
 	$request->closeCursor();
 	
-	echo '{"islog":"true", "text":""}';
+	echo '{"islog":true, "text":""}';
 }
 
 function checkParameters($params)

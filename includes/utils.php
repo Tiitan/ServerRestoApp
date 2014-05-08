@@ -7,7 +7,7 @@ if (!defined('UTILS_PHP'))
 	
 	Function printError($message)
 	{
-		echo '{"islog":"false", "text":"' . $message . '"}';
+		echo '{"islog":false, "text":"' . $message . '"}';
 	}
 
 	Function GetParameters()

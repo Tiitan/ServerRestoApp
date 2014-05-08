@@ -40,10 +40,10 @@ function process($params)
 		$request = $dbc->prepare('INSERT INTO Session(idUser, token, typeUser) VALUES (:idUser, :token, :typeUser)');
 		$request->execute(array('idUser' => $id, 'token' => $token, 'typeUser' => $params['type']));
 
-		echo '{"islog":"true", "token":"' . $token . '"}';
+		echo '{"islog":true, "token":"' . $token . '"}';
 	}
 	else
-		echo '{"islog":"false", "text":""}';
+		echo '{"islog":false, "text":""}';
 	
 	$request->closeCursor();
 }

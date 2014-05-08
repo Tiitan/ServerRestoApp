@@ -25,7 +25,7 @@ function process($params)
 							'email' => isset($_GET[$params['email']]) ? $params['email'] : ''));
 	$request->closeCursor();
 	
-	echo '{"islog":"true", "text":""}';
+	echo '{"islog":true, "text":""}';
 }
 
 function checkParameters($params)

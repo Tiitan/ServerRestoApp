@@ -26,7 +26,7 @@ function process($params, $session)
 	
 	//TODO: check that updated rows number = 1
 	
-	echo '{"islog":"true", "text":""}';
+	echo '{"islog":true, "text":""}';
 }
 
 function checkParameters($params)

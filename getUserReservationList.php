@@ -35,7 +35,7 @@ function process($params, $session)
 
 	$request->closeCursor();
 
-	echo '{"islog":"true", "text":""}';
+	echo '{"islog":true, "text":""}';
 }
 
 
