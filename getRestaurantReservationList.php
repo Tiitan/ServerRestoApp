@@ -28,14 +28,14 @@ function process($params, $session)
 	while($result = $request->fetch()) 
 	{
 		$element = array(
-			'idReservation' => $result['Reservation.idReservation'],
-			'idRestaurant' => $result['Reservation.idRestaurant'],
-			'idUser' => $result['Reservation.idUser'],
-			'name' => $result['User.name'],
-			'personNumber' => $result['Reservation.personNumber'],
-			'date' => $result['Reservation.date'],
-			'state' => $result['Reservation.state'],
-			'email' => $result['Reservation.email']);
+			'idReservation' => $result['idReservation'],
+			'idRestaurant' => $result['idRestaurant'],
+			'idUser' => $result['idUser'],
+			'name' => $result['name'],
+			'personNumber' => $result['personNumber'],
+			'date' => $result['date'],
+			'state' => $result['state'],
+			'email' => $result['email']);
 			
 		array_push($reservationList, $element);
 	}
