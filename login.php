@@ -14,27 +14,31 @@ function process($params)
 {
 	$dbc = ConnectToDataBase();
 	$request = null;
-	
+	$id = null;
+	$result = null;
+
 	$params['pass'] = md5($params['pass']);
 	
 	if ($params['type'] == 'user')
 	{
 		$request = $dbc->prepare('SELECT * FROM user WHERE name = :name AND pass = :pass');
 		$request->execute(array('name' => $params['name'], 'pass' => $params['pass']));
+		$result = $request->fetch();
+		$id = $result['idUser'];
 	}
 	else
 	{
 		$request = $dbc->prepare('SELECT * FROM restaurant WHERE loginName = :loginName AND pass = :pass');
 		$request->execute(array('loginName' => $params['name'], 'pass' => $params['pass']));
+		$result = $request->fetch();
+		$id = $result['idRestaurant'];
 	}
 	
-	$result = $request->fetch();
 	if($result) 
 	{
 		$token = md5(uniqid(mt_rand(), true));
-		
 		$request = $dbc->prepare('INSERT INTO Session(idUser, token, typeUser) VALUES (:idUser, :token, :typeUser)');
-		$request->execute(array('idUser' => $dbc->lastInsertId(), 'token' => $token, 'typeUser' => $params['type']));
+		$request->execute(array('idUser' => $id, 'token' => $token, 'typeUser' => $params['type']));
 
 		echo '{"islog":"true", "token":"' . $token . '"}';
 	}

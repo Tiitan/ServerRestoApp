@@ -7,6 +7,6 @@ if (!defined('DBINFO_PHP'))
 	define('DB_HOST', 'localhost');
 	define('DB_NAME', 'restoappdb');
 	define('DB_LOGIN', 'root');
-	define('DB_PASS', '');
+	define('DB_PASS', 'root');
 }
 ?>

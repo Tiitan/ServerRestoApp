@@ -56,7 +56,7 @@ if (!defined('UTILS_PHP'))
 		$session = array();
 		
 		$request = $dbc->prepare('SELECT * FROM Session WHERE token = :token');
-		$request->execute(array('token' => $params['token']));
+		$request->execute(array('token' => $token));
 		
 		$result = $request->fetch();
 		if($result) 
@@ -80,18 +80,18 @@ if (!defined('UTILS_PHP'))
 	
 	function isLoggedAsRestaurant($session)
 	{
-		if ($session['type'] == 'restaurant')
+		if ($session['typeUser'] == 'restaurant')
 			return true;
 		else
 		{
-			PrintError('Logged as user.');
+			PrintError("Logged as : " . $session['typeUser'] . ".");
 			return false;
 		}
 	}
 	
 	function isLoggedAsUser($session)
 	{
-		if ($session['type'] == 'user')
+		if ($session['typeUser'] == 'user')
 			return true;
 		else
 		{
