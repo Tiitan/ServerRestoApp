@@ -7,7 +7,7 @@ $params = GetParameters('token');
 if ($params != null && checkParameters($params))
 {
 	$dbc = ConnectToDataBase();
-	$session = GetSession(params[token], $dbc);
+	$session = GetSession($params['token'], $dbc);
 	if ($session != null && isLoggedAsRestaurant($session))
 		process($params, $session);
 }
