@@ -18,7 +18,7 @@ if ($params != null && checkParameters($params))
 	
 function process($params, $session, $dbc)
 {
-	$request = $dbc->prepare("SELECT Reservation.idReservation, Reservation.idRestaurant, Reservation.idUser, Reservation.personNumber, Reservation.date, Reservation.state, Reservation.emails,  User.name FROM Reservation INNER JOIN User ON User.idUser = Reservation.idUser WHERE Reservation.idRestaurant = :idRestaurant AND Reservation.state = :state AND Reservation.date > CAST(:dateFrom AS time) AND Reservation.date < CAST(:dateTo AS time)");
+	$request = $dbc->prepare("SELECT Reservation.idReservation, Reservation.idRestaurant, Reservation.idUser, Reservation.personNumber, Reservation.date, Reservation.state, Reservation.emails, Reservation.sitNumber, User.name FROM Reservation INNER JOIN User ON User.idUser = Reservation.idUser WHERE Reservation.idRestaurant = :idRestaurant AND Reservation.state = :state AND Reservation.date > CAST(:dateFrom AS time) AND Reservation.date < CAST(:dateTo AS time)");
 	$request->execute(array('idRestaurant' => $session['idUser'], 'dateFrom' => $params['dateFrom'], 'dateTo' => $params['dateTo'], 'state' => $params['state']));
 	
 	$reservationList = array();
@@ -32,7 +32,9 @@ function process($params, $session, $dbc)
 			'personNumber' => $result['personNumber'],
 			'date' => $result['date'],
 			'state' => $result['state'],
+			'sitNumber' => $result['sitNumber'],
 			'email' => $result['email']);
+			
 			
 		array_push($reservationList, $element);
 	}
