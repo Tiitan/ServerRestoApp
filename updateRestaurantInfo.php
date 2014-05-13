@@ -8,7 +8,7 @@ $params = array_merge($params, GetOptionnalParameters('address', 'phone', 'name'
 if ($params != null && checkParameters($params))
 {
 	$dbc = ConnectToDataBase();
-	$session = GetSession(params[token], $dbc);
+	$session = GetSession($params['token'], $dbc);
 	if ($session != null && isLoggedAsRestaurant($session))
 		process($params, $session);
 }
@@ -17,16 +17,16 @@ if ($params != null && checkParameters($params))
 **	Functions
 */
 	
-function process($params, $session)
+function process($params, $session, $dbc)
 {
 	//TODO: check that state is confirmed
 	
 	$request = $dbc->prepare("Update Restaurant SET address=:address, phone=:phone, name=:name, email=:email WHERE idRestaurant=:idRestaurant");
-	$request->execute(array('idRestaurant' => session['idUser'], 
-							'address' => isset($_GET[$params['address']]) ? params['address'] : '', 
-							'phone' => isset($_GET[$params['phone']]) ? params['phone'] : '', 
-							'name' => isset($_GET[$params['name']]) ? params['name'] : '', 
-							'email' => isset($_GET[$params['email']]) ? params['email'] : ''));
+	$request->execute(array('idRestaurant' => $session['idUser'], 
+							'address' => isset($_GET[$params['address']]) ? $params['address'] : '', 
+							'phone' => isset($_GET[$params['phone']]) ? $params['phone'] : '', 
+							'name' => isset($_GET[$params['name']]) ? $params['name'] : '', 
+							'email' => isset($_GET[$params['email']]) ? $params['email'] : ''));
 							//TODO do not erase data
 	$request->closeCursor();
 	
@@ -37,10 +37,7 @@ function process($params, $session)
 
 function checkParameters($params)
 {
-	if (state == 'conf' || state == 'rej')
-		return true;
-	else
-		PrintError('Invalid parameters.');
+	return true;
 }
 
 
