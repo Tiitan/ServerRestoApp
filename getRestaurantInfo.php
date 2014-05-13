@@ -43,7 +43,7 @@ function process($params, $session)
 
 function checkParameters($params)
 {
-	return true
+	return true;
 }
 
 
