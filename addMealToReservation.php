@@ -7,15 +7,15 @@ $params = GetParameters('token', 'idReservation', 'idMeal', 'number');
 if ($params != null && checkParameters($params))
 {
 	$dbc = ConnectToDataBase();
-	$session = GetSession(params[token], $dbc);
+	$session = GetSession($params[token], $dbc);
 	if ($session != null && checkSession($session))
 		process($params, $session);
 }
 
 function process($params, $session)
 {
-	$request = $dbc->prepare("INSERT INTO MEALRESERVATION (idReservation, idMeal, number) VALUES (:idMealReservation, :idReservation, idMeal, :number)");
-	$request->execute( array('idReservation') => params['idReservation'], array('idMeal') => params['idMeal'], array('number') => params['number']);
+	$request = $dbc->prepare("INSERT INTO MealReservation (idReservation, idMeal, number) VALUES (:idReservation, :idMeal, :number)");
+	$request->execute( array('idReservation') => params['idReservation'], array('idMeal') => $params['idMeal'], array('number') => $params['number']);
 	$request->closeCursor();
 
 	echo '{"islog":"true", "text":""}';
