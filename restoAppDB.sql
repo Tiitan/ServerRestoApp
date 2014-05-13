@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS `restoAppDB`.`Restaurant` (
   `address` VARCHAR(45) NULL,
   `description` VARCHAR(45) NULL,
   `tel` VARCHAR(45) NULL,
+  `location` VARCHAR(45) NULL,
   PRIMARY KEY (`idRestaurant`))
 ENGINE = InnoDB;
 
@@ -44,6 +45,7 @@ CREATE TABLE IF NOT EXISTS `restoAppDB`.`Meal` (
   `idRestaurant` INT NOT NULL,
   `name` VARCHAR(45) NULL,
   `type` VARCHAR(45) NULL,
+  `price` DECIMAL(32) NULL,
   PRIMARY KEY (`idMeal`),
   INDEX `idRestaurant_idx` (`idRestaurant` ASC),
   CONSTRAINT `fk_Meal_Restaurant_idRestaurant`
@@ -52,7 +54,6 @@ CREATE TABLE IF NOT EXISTS `restoAppDB`.`Meal` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `restoAppDB`.`Reservation`
@@ -116,6 +117,26 @@ CREATE TABLE IF NOT EXISTS `restoAppDB`.`Session` (
   `idUser` INT NULL,
   `typeUser` VARCHAR(45) NULL,
   PRIMARY KEY (`idSession`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `restoAppDB`.`Coupon`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `restoAppDB`.`Coupon` (
+  `idCoupon` INT NOT NULL AUTO_INCREMENT,
+  `idRestaurant` INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  `description` VARCHAR(45) NULL,
+  `date begin` VARCHAR(45) NULL,
+  `date end` VARCHAR(45) NULL,
+  PRIMARY KEY (`idCoupon`),
+  INDEX `idRestaurant_idx` (`idRestaurant` ASC),
+  CONSTRAINT `fk_Coupon_Restaurant_idRestaurant`
+    FOREIGN KEY (`idRestaurant`)
+    REFERENCES `restoAppDB`.`Restaurant` (`idRestaurant`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 

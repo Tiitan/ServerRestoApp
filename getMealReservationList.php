@@ -7,7 +7,7 @@ $params = GetParameters('idReservation', 'token');
 if ($params != null && checkParameters($params))
 {
 	$dbc = ConnectToDataBase();
-	$session = GetSession(params[token], $dbc);
+	$session = GetSession($params[token], $dbc);
 	if ($session != null && isLoggedAsRestaurant($session))
 		process($params, $session, $dbc);
 }
@@ -18,17 +18,18 @@ if ($params != null && checkParameters($params))
 	
 function process($params, $session, $dbc)
 {
-	$request = $dbc->prepare("SELECT MealReservation.idMealReservation, MealReservation.number, Meal.name, Meal.type FROM Meal INNER JOIN MealReservation ON Meal.idMeal = MealReservation.idMeal INNER JOIN Reservation ON MealReservation.idReservation = Reservation.idReservation WHERE Reservation.idReservation = :idReservation");
+	$request = $dbc->prepare("SELECT MealReservation.idMealReservation, MealReservation.number, Meal.name, Meal.type, Meal.price FROM Meal INNER JOIN MealReservation ON Meal.idMeal = MealReservation.idMeal INNER JOIN Reservation ON MealReservation.idReservation = Reservation.idReservation WHERE Reservation.idReservation = :idReservation");
 	$request->execute(array('idReservation' => $session['idReservation']));
 	
 	$reservationList = array();
 	while($result = $request->fetch()) 
 	{
 		$element = array(
-			'idMealReservation' => $result['MealReservation.idMealReservation'],
-			'name' => $result['Meal.name'],
-			'type' => $result['Meal.type'],
-			'number' => $result['MealReservation.number']);
+			'idMealReservation' => $result['idMealReservation'],
+			'name' => $result['name'],
+			'type' => $result['type'],
+			'number' => $result['number'],
+			'price' => $result['price']);
 			
 		array_push($reservationList, $element);
 	}

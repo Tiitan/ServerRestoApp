@@ -3,7 +3,7 @@
 include ('includes/sqlConnection.php');
 include ('includes/utils.php');
 
-$params = GetParameters('name', 'type', 'token');
+$params = GetParameters('name', 'type', 'token', 'price');
 if ($params != null && checkParameters($params))
 {
 	$dbc = ConnectToDataBase();
@@ -18,8 +18,8 @@ if ($params != null && checkParameters($params))
 	
 function process($params, $session, $dbc)
 {
-	$request = $dbc->prepare("INSERT INTO MEAL(name, type, idRestaurant) VALUES (:name, :type, :idRestaurant)");
-	$request->execute(array('name' => $params['name'], 'type' => $params['type'], 'idRestaurant' => $session['idUser']));
+	$request = $dbc->prepare("INSERT INTO MEAL(name, type, idRestaurant, price) VALUES (:name, :type, :idRestaurant, :price)");
+	$request->execute(array('name' => $params['name'], 'type' => $params['type'], 'idRestaurant' => $session['idUser'], 'price' => $params['price']));
 	$request->closeCursor();
 	
 	echo '{"islog":"true", "text":""}';
