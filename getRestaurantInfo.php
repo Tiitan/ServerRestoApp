@@ -20,7 +20,7 @@ function process($params, $session)
 {
 	
 	$request = $dbc->prepare("SELECT * FROM Restaurant WHERE idRestaurant = :idRestaurant");
-	$request->execute(array('idRestaurant' => session['idUser']));
+	$request->execute(array('idRestaurant' => $session['idUser']));
 
 	if ($result = $request->fetch())
 	{
@@ -43,10 +43,7 @@ function process($params, $session)
 
 function checkParameters($params)
 {
-	if (state == 'conf' || state == 'rej')
-		return true;
-	else
-		PrintError('Invalid parameters.');
+	return true
 }
 
 
