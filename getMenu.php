@@ -3,18 +3,29 @@
 include ('includes/sqlConnection.php');
 include ('includes/utils.php');
 
-$params = GetParameters('idRestaurant');
-if ($params != null && checkParameters($params))
-	process($params);
+$params = GetOptionnalParameters('idRestaurant', 'token');
+$idRestaurant = null;
+
+$dbc = ConnectToDataBase();
+if (isset $params['idRestaurant'])
+	$idRestaurant = $params['idRestaurant'];
+else if (isset $params['token'])
+{
+	$session = GetSession(params['token'], $dbc);
+	$idRestaurant = $session['idUser'];
+}
+else
+	printError('Missing parameters.');
+	
+if ($idRestaurant != null && checkParameters($idRestaurant))
+	process($idRestaurant, $dbc);
 
 /*
 **	Functions
 */
 	
-function process($params)
-{
-	$dbc = ConnectToDataBase();
-	
+function process($idRestaurant, $dbc)
+{	
 	$request = $dbc->prepare("SELECT * FROM Meal WHERE idRestaurant = :idRestaurant");
 	$request->execute(array('idRestaurant' => $idRestaurant));
 	
@@ -34,7 +45,7 @@ function process($params)
 	$request->closeCursor();
 }
 	
-function checkParameters($params)
+function checkParameters($idRestaurant)
 {
 	//TODO: check parameters
 	return true;
