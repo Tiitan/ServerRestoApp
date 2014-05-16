@@ -19,8 +19,6 @@ if ($params != null && checkParameters($params))
 	
 function process($params, $session, $dbc)
 {
-	//TODO: check that state is confirmed
-	
 	$request = $dbc->prepare("Update Restaurant SET address=:address, tel=:phone, name=:name, description=:description WHERE idRestaurant=:idRestaurant");
 	$result = $request->execute(array('idRestaurant' => $session['idUser'], 
 										'address' => isset($_GET[$params['address']]) ? $params['address'] : '', 

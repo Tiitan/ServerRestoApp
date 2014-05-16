@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS `restoAppDB`.`Meal` (
   `idRestaurant` INT NOT NULL,
   `name` VARCHAR(45) NULL,
   `type` VARCHAR(45) NULL,
+  `description` VARCHAR(45) NULL,
   `price` DECIMAL(32) NULL,
   PRIMARY KEY (`idMeal`),
   INDEX `idRestaurant_idx` (`idRestaurant` ASC),

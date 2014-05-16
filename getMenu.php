@@ -36,6 +36,7 @@ function process($idRestaurant, $dbc)
 			'idMeal' => $result['idMeal'],
 			'name' => $result['name'],
 			'type' => $result['type'],
+			'description' => $result['description'],
 			'price' => $result['price']);
 		
 		array_push($mealList, $element);
