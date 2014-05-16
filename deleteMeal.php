@@ -18,11 +18,17 @@ if ($params != null && checkParameters($params))
 	
 function process($params, $session, $dbc)
 {
-	$request = $dbc->prepare("DELETE FROM Meal WHERE idMeal=:idMeal AND idRestaurant=:idRestaurant");
-	$request->execute(array('idMeal' => $params['idMeal'], 'idRestaurant' => $session['idUser']));
-	$request->closeCursor();
-	
-	echo '{"islog":true, "text":""}';
+	try
+	{
+		$request = $dbc->prepare("DELETE FROM Meal WHERE idMeal=:idMeal AND idRestaurant=:idRestaurant");
+		$request->execute(array('idMeal' => $params['idMeal'], 'idRestaurant' => $session['idUser']));
+		$request->closeCursor();
+		echo '{"islog":true, "text":""}';
+	}
+	catch
+	{
+			echo '{"islog":false, "text":"Error, Likely trying to delete a reserved meal"}';
+	}
 }
 
 function checkParameters($params)
