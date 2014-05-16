@@ -25,7 +25,7 @@ function process($params, $session, $dbc)
 		$request->closeCursor();
 		echo '{"islog":true, "text":""}';
 	}
-	catch
+	catch (Exception $e)
 	{
 			echo '{"islog":false, "text":"Error, Likely trying to delete a reserved meal"}';
 	}
