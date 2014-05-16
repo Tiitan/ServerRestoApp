@@ -21,7 +21,7 @@ function process($params, $session, $dbc)
 {
 	//TODO: check that state is confirmed
 	
-	$request = $dbc->prepare("Update Restaurant SET address=:address, phone=:phone, name=:name, email=:email WHERE idRestaurant=:idRestaurant");
+	$request = $dbc->prepare("Update Restaurant SET address=:address, tel=:phone, name=:name, email=:email WHERE idRestaurant=:idRestaurant");
 	$request->execute(array('idRestaurant' => $session['idUser'], 
 							'address' => isset($_GET[$params['address']]) ? $params['address'] : '', 
 							'phone' => isset($_GET[$params['phone']]) ? $params['phone'] : '', 
