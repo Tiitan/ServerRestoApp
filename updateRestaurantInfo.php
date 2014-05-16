@@ -20,18 +20,19 @@ if ($params != null && checkParameters($params))
 function process($params, $session, $dbc)
 {
 	$request = $dbc->prepare("Update Restaurant SET address=:address, tel=:phone, name=:name, description=:description WHERE idRestaurant=:idRestaurant");
-	$result = $request->execute(array('idRestaurant' => $session['idUser'], 
+	$request->execute(array('idRestaurant' => $session['idUser'], 
 										'address' => isset($_GET[$params['address']]) ? $params['address'] : '', 
 										'phone' => isset($_GET[$params['phone']]) ? $params['phone'] : '', 
 										'name' => isset($_GET[$params['name']]) ? $params['name'] : '', 
 										'description' => isset($_GET[$params['description']]) ? $params['description'] : ''));
 										//TODO do not erase data
-	$request->closeCursor();
 	
-	if ($result->rowCount() == 1)
+	if ($request->rowCount() == 1)
 		echo '{"islog":"true", "text":""}';
 	else
 		echo '{"islog":"false", "text":"Error while updating"}';
+		
+	$request->closeCursor();
 }
 
 function checkParameters($params)
