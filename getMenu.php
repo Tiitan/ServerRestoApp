@@ -7,11 +7,11 @@ $params = GetOptionnalParameters('idRestaurant', 'token');
 $idRestaurant = null;
 
 $dbc = ConnectToDataBase();
-if (isset $params['idRestaurant'])
+if (isset ($params['idRestaurant']))
 	$idRestaurant = $params['idRestaurant'];
-else if (isset $params['token'])
+else if (isset ($params['token']))
 {
-	$session = GetSession(params['token'], $dbc);
+	$session = GetSession($params['token'], $dbc);
 	$idRestaurant = $session['idUser'];
 }
 else
