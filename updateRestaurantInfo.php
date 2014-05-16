@@ -4,7 +4,7 @@ include ('includes/sqlConnection.php');
 include ('includes/utils.php');
 
 $params = GetParameters('token');
-$params = array_merge($params, GetOptionnalParameters('address', 'phone', 'name', 'email'));
+$params = array_merge($params, GetOptionnalParameters('address', 'phone', 'name', 'description'));
 if ($params != null && checkParameters($params))
 {
 	$dbc = ConnectToDataBase();
@@ -21,12 +21,12 @@ function process($params, $session, $dbc)
 {
 	//TODO: check that state is confirmed
 	
-	$request = $dbc->prepare("Update Restaurant SET address=:address, tel=:phone, name=:name, email=:email WHERE idRestaurant=:idRestaurant");
+	$request = $dbc->prepare("Update Restaurant SET address=:address, tel=:phone, name=:name, description=:description WHERE idRestaurant=:idRestaurant");
 	$request->execute(array('idRestaurant' => $session['idUser'], 
 							'address' => isset($_GET[$params['address']]) ? $params['address'] : '', 
 							'phone' => isset($_GET[$params['phone']]) ? $params['phone'] : '', 
 							'name' => isset($_GET[$params['name']]) ? $params['name'] : '', 
-							'email' => isset($_GET[$params['email']]) ? $params['email'] : ''));
+							'description' => isset($_GET[$params['description']]) ? $params['description'] : ''));
 							//TODO do not erase data
 	$request->closeCursor();
 	
