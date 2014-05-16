@@ -19,7 +19,7 @@ if ($params != null && checkParameters($params))
 function process($params, $session, $dbc)
 {
 	$request = $dbc->prepare("SELECT MealReservation.idMealReservation, MealReservation.number, Meal.name, Meal.type, Meal.price FROM Meal INNER JOIN MealReservation ON Meal.idMeal = MealReservation.idMeal INNER JOIN Reservation ON MealReservation.idReservation = Reservation.idReservation WHERE Reservation.idReservation = :idReservation");
-	$request->execute(array('idReservation' => $session['idReservation']));
+	$request->execute(array('idReservation' => $params['idReservation']));
 	
 	$reservationList = array();
 	while($result = $request->fetch()) 
@@ -33,6 +33,7 @@ function process($params, $session, $dbc)
 			
 		array_push($reservationList, $element);
 	}
+	
 	$json = array ('islog' => true, 'reservationList' => $reservationList);
 	echo json_encode($json);
 		

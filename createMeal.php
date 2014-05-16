@@ -7,7 +7,7 @@ $params = GetParameters('name', 'type', 'token', 'price', 'description');
 if ($params != null && checkParameters($params))
 {
 	$dbc = ConnectToDataBase();
-	$session = GetSession(params[token], $dbc);
+	$session = GetSession($params['token'], $dbc);
 	if ($session != null && isLoggedAsRestaurant($session))
 		process($params, $session, $dbc);
 }
@@ -22,7 +22,7 @@ function process($params, $session, $dbc)
 	$request->execute(array('name' => $params['name'], 'type' => $params['type'], 'idRestaurant' => $session['idUser'], 'price' => $params['price'], 'description' => $params['description']));
 	$request->closeCursor();
 	
-	echo '{"islog":"true", "text":""}';
+	echo '{"islog":true, "text":""}';
 }
 
 function checkParameters($params)

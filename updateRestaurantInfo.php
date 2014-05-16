@@ -4,7 +4,7 @@ include ('includes/sqlConnection.php');
 include ('includes/utils.php');
 
 $params = GetParameters('token');
-$params = array_merge($params, GetOptionnalParameters('address', 'phone', 'name', 'description'));
+$params = array_merge($params, GetOptionnalParameters('address', 'phone', 'name', 'description', 'location'));
 if ($params != null && checkParameters($params))
 {
 	$dbc = ConnectToDataBase();
@@ -19,18 +19,19 @@ if ($params != null && checkParameters($params))
 	
 function process($params, $session, $dbc)
 {
-	$request = $dbc->prepare("Update Restaurant SET address=:address, tel=:phone, name=:name, description=:description WHERE idRestaurant=:idRestaurant");
+	$request = $dbc->prepare("UPDATE Restaurant SET address=:address, tel=:phone, name=:name, description=:description, location=:location WHERE idRestaurant=:idRestaurant");
 	$request->execute(array('idRestaurant' => $session['idUser'], 
-										'address' => isset($_GET[$params['address']]) ? $params['address'] : '', 
-										'phone' => isset($_GET[$params['phone']]) ? $params['phone'] : '', 
-										'name' => isset($_GET[$params['name']]) ? $params['name'] : '', 
-										'description' => isset($_GET[$params['description']]) ? $params['description'] : ''));
+										'address' => $params['address'], 
+										'phone' => $params['phone'],
+										'name' => $params['name'],
+										'location' => $params['location'],
+										'description' => $params['description']));
 										//TODO do not erase data
 	
 	if ($request->rowCount() == 1)
-		echo '{"islog":"true", "text":""}';
+		echo '{"islog":true, "text":""}';
 	else
-		echo '{"islog":"false", "text":"Error while updating"}';
+		echo '{"islog":false, "text":"Error while updating"}';
 		
 	$request->closeCursor();
 }
