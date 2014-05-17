@@ -3,7 +3,7 @@
 include ('includes/sqlConnection.php');
 include ('includes/utils.php');
 
-$params = GetParameters('name', 'description', 'dateStart', 'dateEnd');
+$params = GetParameters('name', 'description', 'dateStart', 'dateEnd', 'token');
 if ($params != null && checkParameters($params))
 {
 	$dbc = ConnectToDataBase();
