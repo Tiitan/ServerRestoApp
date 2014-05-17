@@ -18,26 +18,22 @@ if ($params != null && checkParameters($params))
 	
 function process($params, $session, $dbc)
 {
-	
-	$request = $dbc->prepare("SELECT * FROM Restaurant WHERE idRestaurant = :idRestaurant");
+	$request = $dbc->prepare("SELECT client.idClient client.name count(client.idClient) AS number FROM client INNER JOIN reservation ON client.idClient = reservation.idCLient WHERE reservation.idRestaurant = :idRestaurant GROUP BY client.idCLient");
 	$request->execute(array('idRestaurant' => $session['idUser']));
 
-	if ($result = $request->fetch())
+	$clientList = array();
+	while($result = $request->fetch()) 
 	{
-			$restaurantInfo = array(
-			'loginName' => $result['loginName'],
+		$element = array(
 			'name' => $result['name'],
-			'address' => $result['address'],
-			'description' => $result['description'],
-			'location' => $result['location'],
-			'tel' => $result['tel']);
-			
-			$json = array ('islog' => true, 'restaurantInfo' => $restaurantInfo);
-			echo json_encode($json);	
+			'idClient' => $result['idClient'],
+			'number' => $result['number']);
+		
+		array_push($clientList, $element);
 	}
-	else
-		printError('Unknown restaurant ID');
-
+	$json = array ('islog' => true, 'clientList' => $clientList);
+	echo json_encode($json);
+		
 	$request->closeCursor();
 }
 
