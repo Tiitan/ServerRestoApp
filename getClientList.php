@@ -18,7 +18,7 @@ if ($params != null && checkParameters($params))
 	
 function process($params, $session, $dbc)
 {
-	$request = $dbc->prepare("SELECT user.idClient, user.name, count(user.idClient) AS number FROM user INNER JOIN reservation ON user.idUSer = reservation.idUSer WHERE reservation.idRestaurant = :idRestaurant GROUP BY user.idUSer");
+	$request = $dbc->prepare("SELECT user.idUser, user.name, count(user.idUser) AS number FROM user INNER JOIN reservation ON user.idUSer = reservation.idUSer WHERE reservation.idRestaurant = :idRestaurant GROUP BY user.idUSer");
 	$request->execute(array('idRestaurant' => $session['idUser']));
 
 	$clientList = array();
@@ -26,7 +26,7 @@ function process($params, $session, $dbc)
 	{
 		$element = array(
 			'name' => $result['name'],
-			'idClient' => $result['idClient'],
+			'idUser' => $result['idUser'],
 			'number' => $result['number']);
 		
 		array_push($clientList, $element);
