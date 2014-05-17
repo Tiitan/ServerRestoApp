@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `restoAppDB`.`Reservation` (
   `idRestaurant` INT NOT NULL,
   `personNumber` INT NULL,
   `date` DATETIME NULL,
-  `state` ENUM('inv','val','conf','rej','sit') NULL,
+  `state` ENUM('inv','val','conf','rej','sit', 'che') NULL,
   `emails` VARCHAR(45) NULL,
   `sitNumber` INT NULL,
   PRIMARY KEY (`idReservation`),

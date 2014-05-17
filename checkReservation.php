@@ -18,9 +18,9 @@ if ($params != null && checkParameters($params))
 	
 function process($params, $session, $dbc)
 {
-	//TODO: check that state is confirmed
+	//TODO: check that state is confirmed or sit
 	
-	$request = $dbc->prepare("Update Reservation SET state= 'sit', sitNumber=:sitNumber WHERE idReservation=:idReservation AND idRestaurant=:idRestaurant");
+	$request = $dbc->prepare("Update Reservation SET state= 'che' WHERE idReservation=:idReservation AND idRestaurant=:idRestaurant");
 	$request->execute(array('idReservation' => $params['idReservation'], 'idRestaurant' => $session['idUser'], 'sitNumber' => $params['sitNumber']));
 	$request->closeCursor();
 	
@@ -31,10 +31,7 @@ function process($params, $session, $dbc)
 
 function checkParameters($params)
 {
-	// if ($params['state'] == 'conf' || $params['state'] == 'rej')
 		return true;
-	// else
-	// 	PrintError('Invalid parameters.');
 }
 
 
