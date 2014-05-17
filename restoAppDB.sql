@@ -129,8 +129,8 @@ CREATE TABLE IF NOT EXISTS `restoAppDB`.`Coupon` (
   `idRestaurant` INT NOT NULL,
   `name` VARCHAR(45) NULL,
   `description` VARCHAR(45) NULL,
-  `date begin` VARCHAR(45) NULL,
-  `date end` VARCHAR(45) NULL,
+  `dateStart` VARCHAR(45) NULL,
+  `dateEnd` VARCHAR(45) NULL,
   PRIMARY KEY (`idCoupon`),
   INDEX `idRestaurant_idx` (`idRestaurant` ASC),
   CONSTRAINT `fk_Coupon_Restaurant_idRestaurant`
